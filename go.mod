@@ -4,6 +4,8 @@ go 1.22.5
 
 require (
 	github.com/go-co-op/gocron/v2 v2.11.0
+	github.com/gorilla/securecookie v1.1.2
+	github.com/gorilla/sessions v1.3.0
 	github.com/stretchr/testify v1.9.0
 	github.com/zeromicro/go-zero v1.7.0
 	xorm.io/xorm v1.3.9
@@ -18,6 +20,7 @@ require (
 	github.com/fatih/color v1.17.0 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
+	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.20.0 // indirect

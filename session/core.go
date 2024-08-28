@@ -194,7 +194,33 @@ func (s Session) Del(key string) {
 	s.s.Values[key] = nil
 }
 
+// Clear is usually used on user logout. It deletes the session both at server and at client.
 func (s Session) Clear(r *http.Request, w http.ResponseWriter) {
 	s.s.Options.MaxAge = -1
 	_ = s.s.Store().Save(r, w, s.s)
+}
+
+func (s Session) ID() string {
+	return s.s.ID
+}
+
+func (s Session) Authenticated() bool {
+	return s.GetInt(Authenticated) != 0
+}
+
+func (s Session) CreatedAt() time.Time {
+	t, _ := time.Parse(time.RFC3339, s.GetStr(Created))
+	return t
+}
+
+func (s Session) UpdatedAt() time.Time {
+	t, _ := time.Parse(time.RFC3339, s.GetStr(Updated))
+	return t
+}
+
+// Forcely delete a session if we know its ID. Note that it only deletes the session at server side
+// while client could initiate a session with a same ID, which he remembered in the past.
+// ForceDelete is usually used to forbid a session programmly, maybe upon the user's password change.
+func ForceDelete(sessionID string) {
+	sessionStore.erase(&sessions.Session{ID: sessionID})
 }

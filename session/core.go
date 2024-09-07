@@ -191,7 +191,7 @@ func (s Session) GetStr(key string) string {
 }
 
 func (s Session) Del(key string) {
-	s.s.Values[key] = nil
+	delete(s.s.Values, key)
 }
 
 // Clear is usually used on user logout. It deletes the session both at server and at client.
@@ -223,4 +223,12 @@ func (s Session) UpdatedAt() time.Time {
 // ForceDelete is usually used to forbid a session programmly, maybe upon the user's password change.
 func ForceDelete(sessionID string) {
 	sessionStore.erase(&sessions.Session{ID: sessionID})
+}
+
+func (s Session) AddFlash(value interface{}, vars ...string) {
+	s.s.AddFlash(value, vars...)
+}
+
+func (s Session) Flashes(vars ...string) []interface{} {
+	return s.s.Flashes(vars...)
 }
